@@ -1,30 +1,12 @@
 import { stripComment } from "./strip-comment";
+import type { DotEnvValue } from "./types";
 
 const RE_VALID_ENV_KEY = /^[a-zA-Z_.-][a-zA-Z0-9_.-]*$/;
 const RE_EXPORTS = /^export\s+/;
 const RE_BOUNDING_QUOTES = /^"|"$/g;
 const RE_QUOTE_WITH_COMMENT = /(".*?")(\s*#\s*.*)?/;
 
-type DotEnvValue = {
-  /**
-   * The key of the environment variable.
-   */
-  key: string;
-
-  /**
-   * The value of the environment variable.
-   * Multiline values are supported.
-   */
-  value: string;
-
-  /**
-   * `true` if the key is a duplicate of another key.
-   * Its value will still be parsed.
-   */
-  duplicate: boolean;
-};
-
-type Options = {
+type ParseOptions = {
   /**
    * Customize the RegEx used to assert valid env keys.
    * By default, keys must be alphanumeric and must not start with a number.
@@ -40,7 +22,7 @@ type Options = {
   regexEnvKey?: RegExp;
 };
 
-export function parse(text: string, options?: Options) {
+export function parse(text: string, options?: ParseOptions) {
   const { regexEnvKey = RE_VALID_ENV_KEY } = options || {};
   const lines = text.split("\n");
   const keys = new Set<DotEnvValue["key"]>();
