@@ -1,6 +1,6 @@
 // Bun Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`parseDotEnv kitchen sink 1`] = `
+exports[`parse kitchen sink 1`] = `
 [
   {
     "duplicate": false,
@@ -20,7 +20,7 @@ exports[`parseDotEnv kitchen sink 1`] = `
 ]
 `;
 
-exports[`parseDotEnv kitchen sink 2`] = `
+exports[`parse kitchen sink 2`] = `
 [
   {
     "duplicate": false,

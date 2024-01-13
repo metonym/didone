@@ -1,9 +1,9 @@
 import { describe, expect, test } from "bun:test";
-import { parseDotEnv } from "../src";
+import { parse } from "../src";
 
-describe("parseDotEnv", () => {
+describe("parse", () => {
   test.each(["1=bar", "Ü="])("invalid key", (text) => {
-    expect(parseDotEnv(text)).toEqual([]);
+    expect(parse(text)).toEqual([]);
   });
 
   test.each([
@@ -14,7 +14,7 @@ describe("parseDotEnv", () => {
     "\nFOO=bar\n ",
     '# Comment\nFOO="bar"\n\n# Another comment',
   ])("single-line", (text) => {
-    expect(parseDotEnv(text)).toEqual([
+    expect(parse(text)).toEqual([
       {
         duplicate: false,
         key: "FOO",
@@ -31,7 +31,7 @@ describe("parseDotEnv", () => {
     "\nfoo=bar\n ",
     '# Comment\nfoo="bar"\n\n# Another comment',
   ])("single-line, lowercase", (text) => {
-    expect(parseDotEnv(text)).toEqual([
+    expect(parse(text)).toEqual([
       {
         duplicate: false,
         key: "foo",
@@ -45,7 +45,7 @@ describe("parseDotEnv", () => {
     'FOO="abc#xyz" # comment',
     '# comment\nFOO="abc#xyz"\n',
   ])("single-line, quoted", (text) => {
-    expect(parseDotEnv(text)).toEqual([
+    expect(parse(text)).toEqual([
       {
         duplicate: false,
         key: "FOO",
@@ -55,7 +55,7 @@ describe("parseDotEnv", () => {
   });
 
   test("multiline with inline comment", () => {
-    expect(parseDotEnv(`FOO="bar\nbaz"    # comment`)).toEqual([
+    expect(parse(`FOO="bar\nbaz"    # comment`)).toEqual([
       {
         duplicate: false,
         key: "FOO",
@@ -66,7 +66,7 @@ describe("parseDotEnv", () => {
 
   test("multiline with inline comment", () => {
     expect(
-      parseDotEnv(`FOO="start
+      parse(`FOO="start
 ...
 end"    # comment`)
     ).toEqual([
@@ -80,7 +80,7 @@ end"    # comment`)
 
   test("multiline with comments", () => {
     expect(
-      parseDotEnv(`# Comment
+      parse(`# Comment
 FOO="start"
 
 ## Another comment
@@ -96,7 +96,7 @@ FOO="start"
 
   test("non-env var text", () => {
     expect(
-      parseDotEnv(`type DotEnvValue = {
+      parse(`type DotEnvValue = {
   key: string;
   value: string;
   duplicate: boolean;
@@ -107,7 +107,7 @@ FOO="start"
 
   test("unterminated quoted string", () => {
     expect(
-      parseDotEnv(`APP_ENV="development
+      parse(`APP_ENV="development
 A_SECRET=123456789abcdef`)
     ).toEqual([
       {
@@ -120,14 +120,14 @@ A_SECRET=123456789abcdef`)
 
   test("kitchen sink", () => {
     expect(
-      parseDotEnv(`# Database configuration
+      parse(`# Database configuration
 DB_HOST=localhost
 DB_PORT="5432" # Port is read as a string
 DB_USER=myuser`)
     ).toMatchSnapshot();
 
     expect(
-      parseDotEnv(`
+      parse(`
 # comment
 export SMTP=4000
 foo=bar

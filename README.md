@@ -51,9 +51,9 @@ npm i didone
 ## Usage
 
 ```js
-import { parseDotEnv } from "didone";
+import { parse } from "didone";
 
-const values = parseDotEnv(
+const values = parse(
   `
 DB_HOST=localhost
 DB_PORT="5432" # Quoted values
@@ -69,7 +69,7 @@ The default RegEx used to validate env keys is `/^[a-zA-Z_.-][a-zA-Z0-9_.-]*$/`.
 You can customize the RegEx via the `regexEnvKey` option.
 
 ```js
-parseDotEnv("...", {
+parse("...", {
   regexEnvKey: /^[a-zA-Z][a-zA-Z0-9_.-]*$/,
 });
 ```
