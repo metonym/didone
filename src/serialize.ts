@@ -9,12 +9,12 @@ type SerializeOptions = {
 };
 
 export function serialize(values: DotEnvValue[], options?: SerializeOptions) {
-  const { removeDuplicates = false } = options || {};
+  const removeDuplicates = options?.removeDuplicates === true;
 
   let text = "";
 
   for (const { key, value, duplicate } of values) {
-    if (removeDuplicates === true && duplicate) continue;
+    if (duplicate && removeDuplicates) continue;
     text += `${key}=${/(#|\n)/.test(value) ? `"${value}"` : value}\n`;
   }
 

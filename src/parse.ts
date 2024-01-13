@@ -23,7 +23,7 @@ type ParseOptions = {
 };
 
 export function parse(text: string, options?: ParseOptions) {
-  const { regexEnvKey = RE_VALID_ENV_KEY } = options || {};
+  const regexEnvKey = options?.regexEnvKey ?? RE_VALID_ENV_KEY;
   const lines = text.split("\n");
   const keys = new Set<DotEnvValue["key"]>();
   const values = new Set<DotEnvValue>();

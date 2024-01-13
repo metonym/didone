@@ -1,6 +1,7 @@
 # didone
 
 > Minimalist dotenv-like parser for the browser.
+
 > Pronounced "dee-doh-neh".
 
 This zero-dependency library is a minimalist dotenv-like parser. Given a string, it returns an array of objects with the following properties:
