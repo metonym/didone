@@ -1,0 +1,37 @@
+{
+  "name": "didone",
+  "version": "0.1.0",
+  "license": "MIT",
+  "description": "Minimalist dotenv-like parser for the browser",
+  "author": "Eric Liu (https://github.com/metonym)",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "test": "bun test",
+    "prepack": "tsc --project tsconfig.build.json"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "typescript": "latest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/metonym/didone"
+  },
+  "homepage": "https://github.com/metonym/didone",
+  "bugs": "https://github.com/metonym/didone/issues",
+  "keywords": [
+    "dotenv",
+    "parser"
+  ],
+  "files": [
+    "dist"
+  ]
+}

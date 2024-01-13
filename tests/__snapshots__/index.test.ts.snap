@@ -1,0 +1,97 @@
+// Bun Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`parseDotEnv kitchen sink 1`] = `
+[
+  {
+    "duplicate": false,
+    "key": "DB_HOST",
+    "value": "localhost",
+  },
+  {
+    "duplicate": false,
+    "key": "DB_PORT",
+    "value": "5432",
+  },
+  {
+    "duplicate": false,
+    "key": "DB_USER",
+    "value": "myuser",
+  },
+]
+`;
+
+exports[`parseDotEnv kitchen sink 2`] = `
+[
+  {
+    "duplicate": false,
+    "key": "SMTP",
+    "value": "4000",
+  },
+  {
+    "duplicate": false,
+    "key": "foo",
+    "value": "bar",
+  },
+  {
+    "duplicate": false,
+    "key": "FOO",
+    "value": "42",
+  },
+  {
+    "duplicate": false,
+    "key": "WITH-HYPEHN",
+    "value": "1",
+  },
+  {
+    "duplicate": false,
+    "key": "WITH.period",
+    "value": "1",
+  },
+  {
+    "duplicate": false,
+    "key": "SIMPLE",
+    "value": "xyz123",
+  },
+  {
+    "duplicate": false,
+    "key": "WITH_INLINE_COMMENT",
+    "value": "abc",
+  },
+  {
+    "duplicate": false,
+    "key": "WITH_INLINE_COMMENT2",
+    "value": "abc",
+  },
+  {
+    "duplicate": false,
+    "key": "SINGLE_WITH_LINE_BREAKS",
+    "value": 
+"Multiple
+Lines and variable substitution"
+,
+  },
+  {
+    "duplicate": false,
+    "key": "PRIVATE_KEY",
+    "value": 
+"-----BEGIN RSA PRIVATE KEY-----
+...
+Kh9NV...
+
+...
+-----END RSA PRIVATE KEY-----
+"
+,
+  },
+  {
+    "duplicate": true,
+    "key": "SIMPLE",
+    "value": "abc",
+  },
+  {
+    "duplicate": true,
+    "key": "PRIVATE_KEY",
+    "value": "abc",
+  },
+]
+`;
