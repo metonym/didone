@@ -35,7 +35,6 @@ export function parse(text: string, options?: ParseOptions) {
     if (!regexEnvKey.test(key)) continue;
 
     let value = v.trim();
-    if (!value) continue;
 
     if (value.startsWith('"') && !RE_QUOTE_WITH_COMMENT.test(value)) {
       let multiline_value = value.replace(RE_BOUNDING_QUOTES, "");

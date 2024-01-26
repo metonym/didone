@@ -54,6 +54,16 @@ describe("parse", () => {
     ]);
   });
 
+  test("empty value is valid", () => {
+    expect(parse('FOO=')).toEqual([
+      {
+        duplicate: false,
+        key: "FOO",
+        value: "",
+      },
+    ]);
+  });
+
   test("multiline with inline comment", () => {
     expect(parse(`FOO="bar\nbaz"    # comment`)).toEqual([
       {
