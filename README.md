@@ -4,10 +4,10 @@
 
 > Pronounced "dee-doh-neh".
 
-This zero-dependency library is a minimalist dotenv-like parser. Given a string, it returns an array of objects with the following properties:
+This zero-dependency library is a minimalist dotenv-like parser. It intentionally does not perform validation and is simply designed to extract key-value pairs from a given string. The `parse` function returns an array of objects with the following properties:
 
 - `key`: The key of the variable.
-- `value`: The value of the variable. Multi-line values are supported.
+- `value`: The value of the variable. Multiline values are supported.
 - `duplicate`: Whether the key is duplicated or not.
 
 ```dotenv
@@ -44,6 +44,8 @@ DB_USER=myuser2 # Duplicate keys are parsed but marked as duplicates
 ]
 ```
 
+If the provided text does not contain any key-value pairs, an empty array is returned.
+
 ## Install
 
 ```sh
@@ -64,18 +66,6 @@ DB_PORT="5432" # Quoted values
 DB_USER=myuser
   `
 );
-```
-
-#### Options
-
-The default `RegExp` used to validate env keys is `/^[a-zA-Z_.-][a-zA-Z0-9_.-]*$/`. This means that keys must be alphanumeric but must not start with a number. However, they can start with or contain underscores, dashes, and periods.
-
-You can customize the `RegExp` via the `regexEnvKey` option.
-
-```js
-parse("...", {
-  regexEnvKey: /^[a-zA-Z][a-zA-Z0-9_.-]*$/,
-});
 ```
 
 ### `serialize`

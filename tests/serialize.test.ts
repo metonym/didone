@@ -14,7 +14,7 @@ describe("serialize", () => {
     ).toEqual("FOO=bar");
   });
 
-  test("multi-line", () => {
+  test("multiline", () => {
     expect(
       serialize([
         {
