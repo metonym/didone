@@ -49,6 +49,16 @@ exports[`parse kitchen sink 2`] = `
   },
   {
     "duplicate": false,
+    "key": "ÜBER",
+    "value": "ÜBER",
+  },
+  {
+    "duplicate": false,
+    "key": "234",
+    "value": "123",
+  },
+  {
+    "duplicate": false,
     "key": "SIMPLE",
     "value": "xyz123",
   },

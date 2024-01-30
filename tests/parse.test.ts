@@ -2,10 +2,6 @@ import { describe, expect, test } from "bun:test";
 import { parse } from "../src";
 
 describe("parse", () => {
-  test.each(["1=bar", "Ü="])("invalid key", (text) => {
-    expect(parse(text)).toEqual([]);
-  });
-
   test.each([
     "export FOO=bar",
     "FOO=bar",
@@ -55,7 +51,7 @@ describe("parse", () => {
   });
 
   test("empty value is valid", () => {
-    expect(parse('FOO=')).toEqual([
+    expect(parse("FOO=")).toEqual([
       {
         duplicate: false,
         key: "FOO",
@@ -113,6 +109,10 @@ FOO="start"
 };
 `)
     ).toEqual([]);
+  });
+
+  test("non-env var text", () => {
+    expect(parse(`this is simply a plain text= string`)).toEqual([]);
   });
 
   test("unterminated quoted string", () => {
