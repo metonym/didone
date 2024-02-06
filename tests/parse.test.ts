@@ -4,6 +4,7 @@ import { parse } from "../src";
 describe("parse", () => {
   test.each([
     "export FOO=bar",
+    "set FOO=bar",
     "FOO=bar",
     "FOO=bar # comment",
     " FOO= bar ",
