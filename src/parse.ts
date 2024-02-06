@@ -1,7 +1,7 @@
 import { stripComment } from "./strip-comment";
 import type { DotEnvValue } from "./types";
 
-const RE_EXPORTS = /^export\s+/;
+const RE_SET_VERB = /^(export|set)\s+/;
 const RE_BOUNDING_QUOTES = /^"|"$/g;
 const RE_QUOTE_WITH_COMMENT = /(".*?")(\s*#\s*.*)?/;
 
@@ -17,7 +17,7 @@ export function parse(text: string) {
 
     const [k, v = ""] = line.split("=");
 
-    const key = k.replace(RE_EXPORTS, "");
+    const key = k.replace(RE_SET_VERB, "");
     if (!key.trim()) continue;
     if (/\s+/g.test(key)) continue;
 
