@@ -61,6 +61,30 @@ describe("parse", () => {
     ]);
   });
 
+  test("single line with =", () => {
+    expect(parse("FOO==")).toEqual([
+      {
+        duplicate: false,
+        key: "FOO",
+        value: "=",
+      },
+    ]);
+  });
+
+  test.each([
+    "FOO=some=value=",
+    'FOO="some=value="',
+    'FOO="some=value=" # comment',
+  ])("single-line with '='", (text) => {
+    expect(parse(text)).toEqual([
+      {
+        duplicate: false,
+        key: "FOO",
+        value: "some=value=",
+      },
+    ]);
+  });
+
   test("multiline with inline comment", () => {
     expect(parse(`FOO="bar\nbaz"    # comment`)).toEqual([
       {
