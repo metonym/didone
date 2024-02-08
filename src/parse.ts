@@ -15,13 +15,13 @@ export function parse(text: string) {
     if (line.startsWith("#")) continue;
     if (!line.includes("=")) continue;
 
-    const [k, v = ""] = line.split("=");
+    const [k, ...v] = line.split("=");
+    const key = k.replace(RE_SET_VERB, "").trim();
 
-    const key = k.replace(RE_SET_VERB, "");
-    if (!key.trim()) continue;
+    if (!key) continue;
     if (/\s+/g.test(key)) continue;
 
-    let value = v.trim();
+    let value = v.join("=").trim();
 
     if (value.startsWith('"') && !RE_QUOTE_WITH_COMMENT.test(value)) {
       let multiline_value = value.replace(RE_BOUNDING_QUOTES, "");
