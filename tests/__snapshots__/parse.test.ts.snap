@@ -103,5 +103,19 @@ Kh9NV...
     "key": "PRIVATE_KEY",
     "value": "abc",
   },
+  {
+    "duplicate": true,
+    "key": "PRIVATE_KEY",
+    "value": "abc",
+  },
+  {
+    "duplicate": false,
+    "key": "PRIVATE_KEY_SINGLE",
+    "value": 
+"-----BEGIN RSA PRIVATE KEY-----
+...
+-----END RSA PRIVATE KEY-----"
+,
+  },
 ]
 `;

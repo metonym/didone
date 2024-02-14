@@ -1,9 +1,12 @@
-import { stripComment } from "./strip-comment";
+import { stripComment, stripInlineComment } from "./strip-comment";
 import type { DotEnvValue } from "./types";
 
 const RE_SET_VERB = /^(export|set)\s+/;
-const RE_BOUNDING_QUOTES = /^"|"$/g;
-const RE_QUOTE_WITH_COMMENT = /(".*?")(\s*#\s*.*)?/;
+const RE_WHITE_SPACE = /\s+/g;
+const RE_BOUNDING_QUOTES_DOUBLE = /^"|"$/g;
+const RE_BOUNDING_QUOTES_SINGLE = /^'|'$/g;
+const RE_QUOTE_WITH_COMMENT = /(('.*?'|".*?")(\s*#\s*.*)?)$/;
+const RE_QUOTE = /("|')/;
 
 export function parse(text: string) {
   const lines = text.trim().split("\n");
@@ -19,16 +22,33 @@ export function parse(text: string) {
     const key = k.replace(RE_SET_VERB, "").trim();
 
     if (!key) continue;
-    if (/\s+/g.test(key)) continue;
+    if (RE_WHITE_SPACE.test(key)) continue;
 
     let value = v.join("=").trim();
 
-    if (value.startsWith('"') && !RE_QUOTE_WITH_COMMENT.test(value)) {
-      let multiline_value = value.replace(RE_BOUNDING_QUOTES, "");
+    if (RE_QUOTE.test(value[0]) && !RE_QUOTE_WITH_COMMENT.test(value)) {
+      const start_quote = value[0];
+      const quote_bound =
+        start_quote === '"'
+          ? RE_BOUNDING_QUOTES_DOUBLE
+          : RE_BOUNDING_QUOTES_SINGLE;
+      const quote_end = new RegExp(start_quote + "$");
+      let multiline_value = value.replace(quote_bound, "");
 
-      while (i < lines.length - 1 && !lines[i].endsWith('"')) {
+      while (i < lines.length - 1) {
         i += 1;
-        multiline_value += "\n" + stripComment(lines[i]).replace(/"$/, "");
+
+        if (
+          lines[i].includes(start_quote) &&
+          !/\\/.test(lines[i].charAt(lines[i].indexOf(start_quote) - 1))
+        ) {
+          multiline_value +=
+            "\n" +
+            stripInlineComment(lines[i], start_quote).replace(quote_end, "");
+          break;
+        }
+
+        multiline_value += "\n" + stripComment(lines[i]).replace(quote_end, "");
       }
 
       value = multiline_value;
