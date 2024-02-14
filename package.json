@@ -1,6 +1,6 @@
 {
   "name": "didone",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "license": "MIT",
   "description": "Minimalist dotenv-like parser for the browser",
   "author": "Eric Liu (https://github.com/metonym)",
