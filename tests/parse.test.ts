@@ -184,7 +184,56 @@ Kh9NV...
 "
 SIMPLE=abc
 PRIVATE_KEY=abc
+PRIVATE_KEY='abc'
+PRIVATE_KEY_SINGLE='-----BEGIN RSA PRIVATE KEY-----
+...
+-----END RSA PRIVATE KEY-----' # comment
 `)
     ).toMatchSnapshot();
+  });
+});
+
+describe("parse (multi)", () => {
+  test("multi with inline comments", () => {
+    expect(
+      parse(`
+MULTI_DOUBLE="1
+\\"2
+3" # comment
+# comment
+MULTI_SINGLE='1
+2
+3'
+
+MULTI_SINGLE2='1
+2
+3' # comment
+
+MULTI_SINGLE3='1
+2
+3'
+`)
+    ).toEqual([
+      {
+        duplicate: false,
+        key: "MULTI_DOUBLE",
+        value: '1\n\\"2\n3',
+      },
+      {
+        duplicate: false,
+        key: "MULTI_SINGLE",
+        value: "1\n2\n3",
+      },
+      {
+        duplicate: false,
+        key: "MULTI_SINGLE2",
+        value: "1\n2\n3",
+      },
+      {
+        duplicate: false,
+        key: "MULTI_SINGLE3",
+        value: "1\n2\n3",
+      },
+    ]);
   });
 });
